@@ -49,7 +49,7 @@ pipeline {
         steps {
             bat "docker tag i-${username}-feature:${BUILD_NUMBER} ${registry}:${BUILD_NUMBER}"
             bat "docker tag i-${username}-feature:${BUILD_NUMBER} ${registry}:latest"
-            withDockerRegistery([credentialsId: 'Test_Docker', url: ""]) {
+            withDockerRegistry([credentialsId: 'Test_Docker', url: ""]) {
                 bat "docker push ${registry}:${BUILD_NUMBER}"
                 bat "docker push ${registry}:latest"
             }
