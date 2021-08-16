@@ -2,7 +2,7 @@ pipeline {
     environment {
         username = 'vipulrastogi'
         registry = 'vipul7/nagp_assign'
-        branch = 'feature'
+ 
     }
     
     agent any
@@ -14,11 +14,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat "git checkout {branch}"
+//                 
+                
                 bat "mvn clean install"
             }
         }
-    }
+    
     
     stage('Unit Testing') {
         steps {
@@ -40,14 +41,14 @@ pipeline {
     
     stage('Docker Image') {
         steps {
-            bat "docker build -t i-${username}-{branch}:${BUILD_NUMBER} --no-cache -f Dockerfile ."
+            bat "docker build -t i-${username}-feature:${BUILD_NUMBER} --no-cache -f Dockerfile ."
         }
     }
     
     stage('Push image to docker hub') {
         steps {
-            bat "docker tag i-${username}-{branch}:${BUILD_NUMBER} ${registery}:${BUILD_NUMBER}"
-            bat "docker tag i-${username}-{branch}:${BUILD_NUMBER} ${registery}:latest"
+            bat "docker tag i-${username}-feature:${BUILD_NUMBER} ${registery}:${BUILD_NUMBER}"
+            bat "docker tag i-${username}-feature:${BUILD_NUMBER} ${registery}:latest"
             withDockerRegistery([credentialsId: 'Test_Docker', url: ""]) {
                 bat "docker push ${registry}:${BUILD_NUMBER}"
                 bat "docker push ${registry}:latest"
@@ -61,12 +62,12 @@ pipeline {
                 steps {
                     script {
                         try {
-                            bat "docker rm -f c-{username}-master"
+                            bat "docker rm -f c-{username}-feature"
                         }
                         catch (Exception err) {
                             
                         }
-                        bat "docker run --name c-${username}-master -d -p 7400:8080 ${registry}:latest"
+                        bat "docker run --name c-${username}-feature -d -p 7400:8080 ${registry}:latest"
                     }
                 }
             }
@@ -77,6 +78,7 @@ pipeline {
                 }
             }
         }
+    }
     }
     
     
