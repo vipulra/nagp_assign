@@ -1,4 +1,3 @@
-From openjdk:11
-ARG JAR_File
-COPY ${JAR_File} /app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+FROM openjdk:11
+COPY target/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
