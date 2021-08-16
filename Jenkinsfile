@@ -62,7 +62,7 @@ pipeline {
                 steps {
                     script {
                         try {
-                            bat "docker rm -f c-{username}-feature"
+                            bat "docker rm -f c-${username}-feature"
                         }
                         catch (Exception err) {
                             
