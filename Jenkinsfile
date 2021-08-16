@@ -18,7 +18,7 @@ pipeline {
                 bat "mvn clean install"
             }
         }
-    }
+    
     
     stage('Unit Testing') {
         steps {
@@ -77,6 +77,7 @@ pipeline {
                 }
             }
         }
+    }
     }
     
     
