@@ -41,7 +41,7 @@ pipeline {
     
     stage('Docker Image') {
         steps {
-            bat "docker build -t i-${username}-feature:${BUILD_NUMBER} --no-cache -f Dockerfile ."
+            bat "docker build -t i-${username}-feature:${BUILD_NUMBER} --build-arg JAR_File=target/devopssampleapplication.jar --no-cache -f Dockerfile ."
         }
     }
     
