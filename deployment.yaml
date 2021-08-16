@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-app
+  labels:
+    app: java-app
+spec:
+  replicas: 3
+  selector: 
+    matchLabels:
+      app: java-app
+  template:
+    metadata:
+      labels:
+        app: java-app
+    spec: 
+      containers:
+        - name: java-app
+          image: vipul7/nagp_assign:latest
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-app
+spec:
+  type: NodePort
+  selector:
+    app: java-app
+  ports:
+    - protocol: TCP
+      nodePort: 30158
+      port: 8080
+      targetPort: 8080
+
